@@ -149,8 +149,6 @@
             <compilerflag value="-Dstrcasecmp=_stricmp" />
             <compilerflag value="-Dstrncasecmp=_strnicmp" />
 
-            <compilerflag value="-D"/>
-
         </section>
 
         <section unless="windows">
