@@ -1,7 +1,7 @@
 <xml>
 
     <files id="native-toolkit-openal">
-        <compilerflag value="-std=c++14"/>
+        <set name="HXCPP_CPP14" value="1" />
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/"/>
 
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/" />
@@ -41,7 +41,6 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/inprogext.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/panning.cpp" />
 
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/base.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/loopback.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/null.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/wave.cpp" />
@@ -149,6 +148,8 @@
             <compilerflag value="/wd4098" />
             <compilerflag value="-Dstrcasecmp=_stricmp" />
             <compilerflag value="-Dstrncasecmp=_strnicmp" />
+
+            <compilerflag value="-D"/>
 
         </section>
 
