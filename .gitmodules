@@ -6,7 +6,7 @@
 	url = https://github.com/openfl/libsdl
 [submodule "project/lib/openal"]
 	path = project/lib/openal
-	url = https://github.com/openfl/libopenal
+	url = https://github.com/kcat/openal-soft.git project/lib/openal
 [submodule "project/lib/curl"]
 	path = project/lib/curl
 	url = https://github.com/curl/curl
