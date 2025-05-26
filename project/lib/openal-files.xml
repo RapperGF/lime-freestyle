@@ -30,14 +30,9 @@
 
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/alc.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/alconfig.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/alconfig.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/alu.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/alu.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/context.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/context.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/device.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/device.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/inprogext.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/panning.cpp" />
 
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/loopback.cpp" />
@@ -58,41 +53,16 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/reverb.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/vmorpher.cpp" />
 
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/albit.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/albyte.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alcomplex.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alcomplex.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/aldeque.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alfstream.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alfstream.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/almalloc.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/almalloc.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alnumbers.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alnumeric.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/aloptional.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alspan.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alstring.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/alstring.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/altraits.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/atomic.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/comptr.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/dynload.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/dynload.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/intrusive_ptr.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/opthelpers.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/phase_shifter.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/polyphase_resampler.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/polyphase_resampler.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/pragmadefs.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/ringbuffer.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/ringbuffer.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/strutils.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/strutils.h" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/threads.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/threads.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/vecmat.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/vector.h" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/common/win_main_utf8.h" />
+   
         
         <section if="NATIVE_TOOLKIT_HAVE_SDL">
             <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/custom/sdl/include/" />
