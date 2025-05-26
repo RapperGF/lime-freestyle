@@ -73,7 +73,7 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/context.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/converter.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/cpu_caps.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/cubic_tables.cpp" />
+       
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/dbus_wrap.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/devformat.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/device.cpp" />
