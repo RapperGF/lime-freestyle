@@ -1,7 +1,6 @@
 <xml>
 
     <files id="native-toolkit-openal">
-        <set name="HXCPP_CPP14" value="1" />
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/"/>
 
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/" />
@@ -46,7 +45,6 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/wave.cpp" />
 
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/autowah.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/base.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/chorus.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/compressor.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/dedicated.cpp" />
