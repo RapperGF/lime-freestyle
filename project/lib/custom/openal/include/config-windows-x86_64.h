@@ -136,7 +136,3 @@
 
 /* Define if we have pthread_set_name_np() */
 /* #undef HAVE_PTHREAD_SET_NAME_NP */
-
-#ifdef src
-#undef src
-#endif
