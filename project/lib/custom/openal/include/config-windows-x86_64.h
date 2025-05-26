@@ -3,7 +3,7 @@
 #define ALC_API __declspec(dllexport)
 
 /* Define a restrict macro for non-aliased pointers */
- /* #define RESTRICT __restrict */
+#define RESTRICT __restrict
 
 /* Define if HRTF data is embedded in the library */
 #define ALSOFT_EMBED_HRTF_DATA
