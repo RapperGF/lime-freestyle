@@ -10,6 +10,7 @@
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/common/" />
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/custom/openal/include/" />
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/include/" />
+        <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/core/"/>
         <compilerflag value="-DAL_LIBTYPE_STATIC" if="native_toolkit_openal_static" />
 
         <compilerflag value="-DAL_ALEXT_PROTOTYPES" />
@@ -62,6 +63,37 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/ringbuffer.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/strutils.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/threads.cpp" />
+
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/ambdec.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/ambidefs.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bformatdec.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bs2b.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bsinc_tables.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/buffer_storage.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/context.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/converter.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/cpu_caps.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/cubic_tables.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/dbus_wrap.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/devformat.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/device.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/effectslot.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/except.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/fmt_traits.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/fpu_ctrl.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/helpers.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/hrtf.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/logging.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mastering.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/rtkit.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/uiddefs.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/voice.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_neon.cpp" if="rpi || HXCPP_ARM64" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse.cpp" unless="rpi || android || HXCPP_ARM64" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse2.cpp" unless="rpi || android || HXCPP_ARM64" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse3.cpp" unless="rpi || android || HXCPP_ARM64" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/uhjfilter.cpp" />
    
         
         <section if="NATIVE_TOOLKIT_HAVE_SDL">
