@@ -136,3 +136,8 @@
 
 /* Define if we have pthread_set_name_np() */
 /* #undef HAVE_PTHREAD_SET_NAME_NP */
+
+#ifdef src
+#pragma message("WARNING: 'src' is defined as a macro!")
+#undef src
+#endif
