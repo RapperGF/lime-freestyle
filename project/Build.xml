@@ -342,7 +342,7 @@
 	<include name="lib/mojoal/files.xml" />
 	<include name="lib/neko/files.xml" />
 	<include name="lib/ogg/files.xml" />
-	<include name="lib/openal/files.xml" />
+	<include name="lib/openal-files.xml" />
 	<include name="lib/pixman/files.xml" />
 	<include name="lib/png/files.xml" />
 	<include name="lib/sdl/files.xml" />
