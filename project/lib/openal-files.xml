@@ -30,6 +30,21 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/al/source.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/al/state.cpp" />
 
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/autowah.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/chorus.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/compressor.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/dedicated.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/distortion.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/echo.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/effects.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/equalizer.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/fshifter.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/modulator.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/null.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/pshifter.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/reverb.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/al/effects/vmorpher.cpp" />
+
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/alc.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/alconfig.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/alu.cpp" />
@@ -47,7 +62,6 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/compressor.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/dedicated.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/distortion.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/effects.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/echo.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/equalizer.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/fshifter.cpp" />
