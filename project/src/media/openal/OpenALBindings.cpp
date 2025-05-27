@@ -2098,6 +2098,35 @@ namespace lime {
 
 	}
 
+	value lime_al_get_sourcedv_soft (value source, int param, int count)
+	{
+		#ifdef LIME_OPENALSOFT
+		ALuint id = (ALuint)(uintptr_t)val_data (source);
+		ALdouble* values = new ALdouble[count];
+		alGetSourcedvSOFT(id, param, values);
+
+		value result = alloc_array (count);
+
+		for (int i = 0; i < count; i++)
+		{
+			val_array_set_i(result, i, alloc_float(values[i]));
+		}
+
+		delete[] values;
+		return result;
+		#endif
+	}
+
+	HL_PRIM varray* HL_NAME(hl_al_get_sourcedv_soft) (HL_CFFIPointer* source, int param, int count)
+	{
+		#ifdef LIME_OPENALSOFT
+		ALuint id = (ALuint)(uintptr_t)source->ptr;
+		varray* result = hl_alloc_array(&hlt_f64, count);
+		alGetSourcedvSOFT(id, param, hl_aptr (result, double));
+		return result;
+		#endif
+	}
+
 
 	value lime_al_get_sourcei (value source, int param) {
 
@@ -2588,6 +2617,22 @@ namespace lime {
 
 	}
 
+	void lime_al_source_play_at_time_soft(int source, double startTime) {
+		if (!alSourcePlayAtTimeSOFT_ptr)
+			alSourcePlayAtTimeSOFT_ptr = (LPALSOURCEPLAYATTIMESOFT)alGetProcAddress("alSourcePlayAtTimeSOFT");
+
+		if (alSourcePlayAtTimeSOFT_ptr)
+			alSourcePlayAtTimeSOFT_ptr((ALuint)source, (ALint64SOFT)(int64_t)startTime);
+	}
+
+	HL_PRIM void HL_NAME(hl_al_source_play_at_time_soft)(int source, double startTime) {
+		if (!alSourcePlayAtTimeSOFT_ptr)
+			alSourcePlayAtTimeSOFT_ptr = (LPALSOURCEPLAYATTIMESOFT)alGetProcAddress("alSourcePlayAtTimeSOFT");
+
+		if (alSourcePlayAtTimeSOFT_ptr)
+			alSourcePlayAtTimeSOFT_ptr((ALuint)source, (ALint64SOFT)(int64_t)startTime);
+	}
+
 
 	void lime_al_source_playv (int n, value sources) {
 
@@ -2629,6 +2674,48 @@ namespace lime {
 
 		}
 
+	}
+
+	typedef void (AL_APIENTRY *LPALSOURCEPLAYATTIMEVSOFT)(ALsizei, const ALuint*, ALint64SOFT);
+	static LPALSOURCEPLAYATTIMEVSOFT alSourcePlayAtTimevSOFT_ptr = nullptr;
+
+	void lime_al_source_play_at_timev_soft(int n, value sources, double startTime) {
+		if (!val_is_null(sources)) {
+			int size = val_array_size(sources);
+			ALuint* data = new ALuint[size];
+
+			for (int i = 0; i < size; ++i) {
+				data[i] = (ALuint)(uintptr_t)val_data(val_array_i(sources, i));
+			}
+
+			if (!alSourcePlayAtTimevSOFT_ptr)
+				alSourcePlayAtTimevSOFT_ptr = (LPALSOURCEPLAYATTIMEVSOFT)alGetProcAddress("alSourcePlayAtTimevSOFT");
+
+			if (alSourcePlayAtTimevSOFT_ptr)
+				alSourcePlayAtTimevSOFT_ptr(n, data, (ALint64SOFT)(int64_t)startTime);
+
+			delete[] data;
+		}
+	}
+
+	HL_PRIM void HL_NAME(hl_al_source_play_at_timev_soft)(int n, varray* sources, double startTime) {
+		if (sources) {
+			int size = sources->size;
+			HL_CFFIPointer** sourcesData = hl_aptr(sources, HL_CFFIPointer*);
+			ALuint* data = new ALuint[size];
+
+			for (int i = 0; i < size; ++i) {
+				data[i] = (ALuint)(uintptr_t)(*sourcesData++)->ptr;
+			}
+
+			if (!alSourcePlayAtTimevSOFT_ptr)
+				alSourcePlayAtTimevSOFT_ptr = (LPALSOURCEPLAYATTIMEVSOFT)alGetProcAddress("alSourcePlayAtTimevSOFT");
+
+			if (alSourcePlayAtTimevSOFT_ptr)
+				alSourcePlayAtTimevSOFT_ptr(n, data, (ALint64SOFT)(int64_t)startTime);
+
+			delete[] data;
+		}
 	}
 
 
@@ -3572,6 +3659,7 @@ namespace lime {
 	DEFINE_PRIME2 (lime_al_get_source3i);
 	DEFINE_PRIME2 (lime_al_get_sourcef);
 	DEFINE_PRIME3 (lime_al_get_sourcefv);
+	DEFINE_PRIME3 (lime_al_get_sourcedv_soft);
 	DEFINE_PRIME2 (lime_al_get_sourcei);
 	DEFINE_PRIME3 (lime_al_get_sourceiv);
 	DEFINE_PRIME1 (lime_al_get_string);
@@ -3594,6 +3682,8 @@ namespace lime {
 	DEFINE_PRIME2v (lime_al_source_pausev);
 	DEFINE_PRIME1v (lime_al_source_play);
 	DEFINE_PRIME2v (lime_al_source_playv);
+	DEFINE_PRIME2v (lime_al_source_play_at_time_soft);
+	DEFINE_PRIME3v (lime_al_source_play_at_timev_soft);
 	DEFINE_PRIME3v (lime_al_source_queue_buffers);
 	DEFINE_PRIME1v (lime_al_source_rewind);
 	DEFINE_PRIME2v (lime_al_source_rewindv);
@@ -3697,6 +3787,7 @@ namespace lime {
 	DEFINE_HL_PRIM (_F32, hl_al_get_sourcef, _TCFFIPOINTER _I32);
 	DEFINE_HL_PRIM (_ARR, hl_al_get_sourcefv, _TCFFIPOINTER _I32 _I32);
 	DEFINE_HL_PRIM (_DYN, hl_al_get_sourcei, _TCFFIPOINTER _I32);
+	DEFINE_HL_PRIM (_ARR, hl_al_get_sourcedv_soft, _TCFFIPOINTER _I32 _I32);
 	DEFINE_HL_PRIM (_ARR, hl_al_get_sourceiv, _TCFFIPOINTER _I32 _I32);
 	DEFINE_HL_PRIM (_BYTES, hl_al_get_string, _I32);
 	DEFINE_HL_PRIM (_BOOL, hl_al_is_aux, _TCFFIPOINTER);
@@ -3718,6 +3809,8 @@ namespace lime {
 	DEFINE_HL_PRIM (_VOID, hl_al_source_pausev, _I32 _ARR);
 	DEFINE_HL_PRIM (_VOID, hl_al_source_play, _TCFFIPOINTER);
 	DEFINE_HL_PRIM (_VOID, hl_al_source_playv, _I32 _ARR);
+	DEFINE_HL_PRIM(_VOID, hl_al_source_play_at_time_soft, _I32 _F64);
+	DEFINE_HL_PRIM(_VOID, hl_al_source_play_at_timev_soft, _I32 _ARR _F64);
 	DEFINE_HL_PRIM (_VOID, hl_al_source_queue_buffers, _TCFFIPOINTER _I32 _ARR);
 	DEFINE_HL_PRIM (_VOID, hl_al_source_rewind, _TCFFIPOINTER);
 	DEFINE_HL_PRIM (_VOID, hl_al_source_rewindv, _I32 _ARR);
