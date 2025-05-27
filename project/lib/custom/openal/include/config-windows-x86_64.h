@@ -17,6 +17,7 @@
 /* Define if we have the _aligned_malloc function */
 #define HAVE__ALIGNED_MALLOC
 
+
 /* Define if we have the proc_pidpath function */
 /* #undef HAVE_PROC_PIDPATH */
 

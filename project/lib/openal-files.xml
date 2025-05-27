@@ -40,6 +40,7 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/loopback.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/null.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/wave.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/base.cpp" />
 
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/autowah.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/chorus.cpp" />
@@ -64,10 +65,10 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/ringbuffer.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/strutils.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/common/threads.cpp" />
+
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/ambdec.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/ambidefs.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bformatdec.cpp" />
-
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bs2b.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bsinc_tables.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/buffer_storage.cpp" />
