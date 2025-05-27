@@ -3,7 +3,10 @@
 #define ALC_API __declspec(dllexport)
 
 /* Define a restrict macro for non-aliased pointers */
-#define RESTRICT __restrict
+//#define RESTRICT __restrict
+
+/* Define the alignment attribute for externally callable functions. */
+#define FORCE_ALIGN
 
 /* Define if HRTF data is embedded in the library */
 #define ALSOFT_EMBED_HRTF_DATA
@@ -136,8 +139,3 @@
 
 /* Define if we have pthread_set_name_np() */
 /* #undef HAVE_PTHREAD_SET_NAME_NP */
-
-#ifdef src
-#pragma message("WARNING: 'src' is defined as a macro!")
-#undef src
-#endif

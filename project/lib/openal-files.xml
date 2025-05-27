@@ -148,15 +148,20 @@
             <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/wasapi.cpp" />
             <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/winmm.cpp" />
 
+            <compilerflag value="-DRESTRICT=" />
+            <compilerflag value="-DFORCE_ALIGN=" />
             <compilerflag value="-DWIN32" />
             <compilerflag value="-D_WINDOWS" />
             <compilerflag value="-D_WIN32" />
-            <compilerflag value="-D_WIN32_WINNT=0x0502" />
+            <compilerflag value="-D_WIN32_WINNT=0x0600" />
             <compilerflag value="-D_CRT_SECURE_NO_WARNINGS" />
             <compilerflag value="-D_CRT_NONSTDC_NO_DEPRECATE" />
             <compilerflag value="/wd4098" />
+            <compilerflag value="/EHsc" />
             <compilerflag value="-Dstrcasecmp=_stricmp" />
             <compilerflag value="-Dstrncasecmp=_strnicmp" />
+            <compilerflag value="/permissive-" />
+            <compilerflag value="/utf-8" />
 
         </section>
 
