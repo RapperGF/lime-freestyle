@@ -88,11 +88,17 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mastering.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/voice.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer_c.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_neon.cpp" if="rpi || HXCPP_ARM64" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse.cpp" unless="rpi || android || HXCPP_ARM64" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse2.cpp" unless="rpi || android || HXCPP_ARM64" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse3.cpp" unless="rpi || android || HXCPP_ARM64" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/uhjfilter.cpp" />
+
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/filters/biquad.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/filters/nfc.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/filters/splitter.cpp" />
+
    
         
         <section if="NATIVE_TOOLKIT_HAVE_SDL">
