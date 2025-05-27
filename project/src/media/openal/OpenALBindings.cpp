@@ -19,9 +19,9 @@
 #include <list>
 #include <map>
 
-typedef void (AL_APIENTRY *LPALSOURCEPLAYATTIMESOFT)(ALuint, ALint64SOFT);
-static LPALSOURCEPLAYATTIMESOFT alSourcePlayAtTimeSOFT_ptr = nullptr;
 
+static LPALSOURCEPLAYATTIMESOFT alSourcePlayAtTimeSOFT_ptr = nullptr;
+static LPALSOURCEPLAYATTIMEVSOFT alSourcePlayAtTimevSOFT_ptr = nullptr;
 
 namespace lime {
 
