@@ -157,7 +157,6 @@
             <compilerflag value="/wd4098" />
             <compilerflag value="-Dstrcasecmp=_stricmp" />
             <compilerflag value="-Dstrncasecmp=_strnicmp" />
-            <compilerflag value="/std=c++17" />
 
         </section>
 

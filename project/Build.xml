@@ -176,6 +176,7 @@
 
 		<section if="LIME_OPENAL">
 
+			<set name="HXCPP_CPP17" value="1"/>
 			<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/include/" unless="LIME_MOJOAL || emscripten" />
 			<compilerflag value="-I${NATIVE_TOOLKIT_PATH}/mojoal/" if="LIME_MOJOAL" />
 			<compilerflag value="-DLIME_OPENAL" />
