@@ -67,7 +67,7 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/ambdec.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/ambidefs.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bformatdec.cpp" />
-        
+
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bs2b.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/bsinc_tables.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/buffer_storage.cpp" />
@@ -86,7 +86,6 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/logging.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mastering.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/rtkit.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/voice.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_neon.cpp" if="rpi || HXCPP_ARM64" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse.cpp" unless="rpi || android || HXCPP_ARM64" />
