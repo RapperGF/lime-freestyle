@@ -88,7 +88,7 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mastering.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/voice.cpp" />
-        <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer_c.cpp" />
+        
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_neon.cpp" if="rpi || HXCPP_ARM64" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse.cpp" unless="rpi || android || HXCPP_ARM64" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/core/mixer/mixer_sse2.cpp" unless="rpi || android || HXCPP_ARM64" />
