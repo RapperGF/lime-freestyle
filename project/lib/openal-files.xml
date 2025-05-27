@@ -47,6 +47,7 @@
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/compressor.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/dedicated.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/distortion.cpp" />
+        <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/effect.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/echo.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/equalizer.cpp" />
         <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/effects/fshifter.cpp" />
