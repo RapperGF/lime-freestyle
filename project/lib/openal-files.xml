@@ -11,7 +11,7 @@
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/custom/openal/include/" />
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/include/" />
         <compilerflag value="-I${NATIVE_TOOLKIT_PATH}/openal/core/"/>
-        
+
         <compilerflag value="-DAL_LIBTYPE_STATIC" if="native_toolkit_openal_static" />
 
         <compilerflag value="-DAL_ALEXT_PROTOTYPES" />
@@ -143,7 +143,7 @@
         </section>
 
         <section if="windows">
-
+            
             <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/dsound.cpp" />
             <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/wasapi.cpp" />
             <file name="${NATIVE_TOOLKIT_PATH}/openal/alc/backends/winmm.cpp" />
@@ -157,6 +157,7 @@
             <compilerflag value="/wd4098" />
             <compilerflag value="-Dstrcasecmp=_stricmp" />
             <compilerflag value="-Dstrncasecmp=_strnicmp" />
+            <compilerflag value="/std=c++17" />
 
         </section>
 
