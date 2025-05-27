@@ -19,6 +19,9 @@
 #include <list>
 #include <map>
 
+typedef void (AL_APIENTRY *LPALSOURCEPLAYATTIMESOFT)(ALuint, ALint64SOFT);
+static LPALSOURCEPLAYATTIMESOFT alSourcePlayAtTimeSOFT_ptr = nullptr;
+
 
 namespace lime {
 
@@ -2675,9 +2678,6 @@ namespace lime {
 		}
 
 	}
-
-	typedef void (AL_APIENTRY *LPALSOURCEPLAYATTIMEVSOFT)(ALsizei, const ALuint*, ALint64SOFT);
-	static LPALSOURCEPLAYATTIMEVSOFT alSourcePlayAtTimevSOFT_ptr = nullptr;
 
 	void lime_al_source_play_at_timev_soft(int n, value sources, double startTime) {
 		if (!val_is_null(sources)) {
