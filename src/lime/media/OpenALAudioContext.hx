@@ -391,6 +391,11 @@ class OpenALAudioContext
 		return AL.getSourcefv(source, param);
 	}
 
+	public function getSourcedvSoft(source:ALSource, param:Int, count:Int = 1):Array<Float>
+	{
+		return AL.getSourcedvSoft(source, param, count);
+	}
+
 	public function getSourcei(source:ALSource, param:Int):Dynamic
 	{
 		return AL.getSourcei(source, param);
@@ -526,6 +531,16 @@ class OpenALAudioContext
 	public function sourcePlayv(sources:Array<ALSource>):Void
 	{
 		AL.sourcePlayv(sources);
+	}
+
+	public function sourcePlayAtTimeSoft(source:ALSource, startTime:Float):Void
+	{
+		AL.sourcePlayAtTimeSoft(source, startTime);
+	}
+
+	public function sourcePlayvAtTimeSoft(sources:Array<ALSource>, startTime:Float):Void
+	{
+		AL.sourcePlayvAtTimeSoft(sources, startTime);
 	}
 
 	public function sourceStop(source:ALSource):Void

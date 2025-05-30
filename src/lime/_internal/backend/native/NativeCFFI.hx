@@ -1581,6 +1581,10 @@ class NativeCFFI
 
 	@:cffi private static function lime_al_get_sourcefv(source:CFFIPointer, param:Int, count:Int):Array<Float>;
 
+	@:cffi private static function lime_al_get_sourcedv_soft(source:CFFIPointer, param:Int, count:Int):Array<Float>;
+
+	@:cffi private static function lime_alc_get_integer64v_soft(source:CFFIPointer, param:Int):Float;
+
 	@:cffi private static function lime_al_get_sourcei(source:CFFIPointer, param:Int):Dynamic;
 
 	@:cffi private static function lime_al_get_sourceiv(source:CFFIPointer, param:Int, count:Int):Array<Int>;
@@ -1614,6 +1618,10 @@ class NativeCFFI
 	@:cffi private static function lime_al_source_play(source:CFFIPointer):Void;
 
 	@:cffi private static function lime_al_source_playv(n:Int, sources:Dynamic):Void;
+
+	@:cffi private static function lime_al_source_play_at_time_soft(source:CFFIPointer, startTime:Float):Void;
+
+	@:cffi private static function lime_al_source_play_at_timev_soft(n:Int, sources:Array<CFFIPointer>, startTime:Float):Void;
 
 	@:cffi private static function lime_al_source_queue_buffers(source:CFFIPointer, nb:Int, buffers:Dynamic):Void;
 
@@ -1771,6 +1779,11 @@ class NativeCFFI
 	private static var lime_al_get_sourcef = new cpp.Callable<cpp.Object->Int->cpp.Float32>(cpp.Prime._loadPrime("lime", "lime_al_get_sourcef", "oif", false));
 	private static var lime_al_get_sourcefv = new cpp.Callable<cpp.Object->Int->Int->cpp.Object>(cpp.Prime._loadPrime("lime", "lime_al_get_sourcefv", "oiio",
 		false));
+	private static var lime_al_get_sourcedv_soft = new cpp.Callable<cpp.Object->Int->Int->cpp.Object>(cpp.Prime._loadPrime("lime", "lime_al_get_sourcedv_soft",
+		"oiio", false));
+	private static var lime_alc_get_integer64v_soft = new cpp.Callable<cpp.Object->Int->Float>(
+  		cpp.Prime._loadPrime("lime", "lime_alc_get_integer64v_soft", "oio", false)
+	);
 	private static var lime_al_get_sourcei = new cpp.Callable<cpp.Object->Int->cpp.Object>(cpp.Prime._loadPrime("lime", "lime_al_get_sourcei", "oio", false));
 	private static var lime_al_get_sourceiv = new cpp.Callable<cpp.Object->Int->Int->cpp.Object>(cpp.Prime._loadPrime("lime", "lime_al_get_sourceiv", "oiio",
 		false));
@@ -1792,6 +1805,12 @@ class NativeCFFI
 		false));
 	private static var lime_al_source_play = new cpp.Callable<cpp.Object->cpp.Void>(cpp.Prime._loadPrime("lime", "lime_al_source_play", "ov", false));
 	private static var lime_al_source_playv = new cpp.Callable<Int->cpp.Object->cpp.Void>(cpp.Prime._loadPrime("lime", "lime_al_source_playv", "iov", false));
+	private static var lime_al_source_play_at_time_soft = new cpp.Callable<(cpp.Object, Float) -> Void>(
+    	cpp.Prime._loadPrime("lime", "lime_al_source_play_at_time_soft", "odv", false)
+	);
+	private static var lime_al_source_play_at_timev_soft = new cpp.Callable<(Int, cpp.Object, Float) -> Void>(
+    	cpp.Prime._loadPrime("lime", "lime_al_source_play_at_timev_soft", "iodv", false)
+	);
 	private static var lime_al_source_queue_buffers = new cpp.Callable<cpp.Object->Int->cpp.Object->cpp.Void>(cpp.Prime._loadPrime("lime",
 		"lime_al_source_queue_buffers", "oiov", false));
 	private static var lime_al_source_rewind = new cpp.Callable<cpp.Object->cpp.Void>(cpp.Prime._loadPrime("lime", "lime_al_source_rewind", "ov", false));
@@ -1912,6 +1931,8 @@ class NativeCFFI
 	private static var lime_al_get_source3i = CFFI.load("lime", "lime_al_get_source3i", 2);
 	private static var lime_al_get_sourcef = CFFI.load("lime", "lime_al_get_sourcef", 2);
 	private static var lime_al_get_sourcefv = CFFI.load("lime", "lime_al_get_sourcefv", 3);
+	private static var lime_al_get_sourcedv_soft = CFFI.load("lime", "lime_al_get_sourcedv_soft", 3);
+	private static var lime_alc_get_integer64v_soft = CFFI.load("lime", "lime_alc_get_integer64v_soft", 2);
 	private static var lime_al_get_sourcei = CFFI.load("lime", "lime_al_get_sourcei", 2);
 	private static var lime_al_get_sourceiv = CFFI.load("lime", "lime_al_get_sourceiv", 3);
 	private static var lime_al_get_string = CFFI.load("lime", "lime_al_get_string", 1);
@@ -1929,6 +1950,8 @@ class NativeCFFI
 	private static var lime_al_source_pausev = CFFI.load("lime", "lime_al_source_pausev", 2);
 	private static var lime_al_source_play = CFFI.load("lime", "lime_al_source_play", 1);
 	private static var lime_al_source_playv = CFFI.load("lime", "lime_al_source_playv", 2);
+	private static var lime_al_source_play_at_time_soft = CFFI.load("lime", "lime_al_source_play_at_time_soft", 2);
+	private static var lime_al_source_play_at_timev_soft = CFFI.load("lime", "lime_al_source_play_at_timev_soft", 3);
 	private static var lime_al_source_queue_buffers = CFFI.load("lime", "lime_al_source_queue_buffers", 3);
 	private static var lime_al_source_rewind = CFFI.load("lime", "lime_al_source_rewind", 1);
 	private static var lime_al_source_rewindv = CFFI.load("lime", "lime_al_source_rewindv", 2);
@@ -2169,6 +2192,11 @@ class NativeCFFI
 		return null;
 	}
 
+	@:hlNative("lime", "hl_al_get_sourcedv_soft") private static function lime_al_get_sourcedv_soft(source:CFFIPointer, param:Int, count:Int):hl.NativeArray<hl.F64>
+	{
+		return null;
+	}
+
 	@:hlNative("lime", "hl_al_get_sourcei") private static function lime_al_get_sourcei(source:CFFIPointer, param:Int):Dynamic
 	{
 		return null;
@@ -2223,6 +2251,12 @@ class NativeCFFI
 	@:hlNative("lime", "hl_al_source_play") private static function lime_al_source_play(source:CFFIPointer):Void {}
 
 	@:hlNative("lime", "hl_al_source_playv") private static function lime_al_source_playv(n:Int, sources:hl.NativeArray<CFFIPointer>):Void {}
+
+	@:hlNative("lime", "hl_al_source_play_at_time_soft")
+	private static function lime_al_source_play_at_time_soft(source:CFFIPointer, startTime:Float):Void {}
+
+	@:hlNative("lime", "hl_al_source_play_at_timev_soft")
+	private static function lime_al_source_play_at_timev_soft(n:Int, sources:hl.NativeArray<CFFIPointer>, startTime:Float):Void {}
 
 	@:hlNative("lime", "hl_al_source_queue_buffers") private static function lime_al_source_queue_buffers(source:CFFIPointer, nb:Int,
 		buffers:hl.NativeArray<CFFIPointer>):Void {}

@@ -32,6 +32,9 @@ class ALC
 	public static inline var ENUMERATE_ALL_EXT:Int = 1;
 	public static inline var DEFAULT_ALL_DEVICES_SPECIFIER:Int = 0x1012;
 	public static inline var ALL_DEVICES_SPECIFIER:Int = 0x1013;
+	public static inline var DEVICE_CLOCK_SOFT:Int = 0x1600;
+	public static inline var DEVICE_LATENCY_SOFT:Int = 0x1601;
+	public static inline var DEVICE_CLOCK_LATENCY_SOFT:Int = 0x1602;
 
 	public static function closeDevice(device:ALDevice):Bool
 	{
@@ -137,6 +140,13 @@ class ALC
 		#end
 		#else
 		return null;
+		#end
+	}
+
+	public static function getIntegervSoft(device:ALDevice, param:Int) {
+		#if (lime_cffi && lime_openal && !macro)	
+		var result = NativeCFFI.lime_alc_get_integer64v_soft(device, param);
+		return (result / 1000000000.0) * 1000;
 		#end
 	}
 

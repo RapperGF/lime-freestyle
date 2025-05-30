@@ -42,6 +42,11 @@ class AL
 	public static inline var SEC_OFFSET:Int = 0x1024;
 	public static inline var SAMPLE_OFFSET:Int = 0x1025;
 	public static inline var BYTE_OFFSET:Int = 0x1026;
+	public static inline var DEVICE_CLOCK_SOFT:Int = 0x1600;
+	public static inline var DEVICE_LATENCY_SOFT:Int = 0x1601;
+	public static inline var DEVICE_CLOCK_LATENCY_SOFT:Int = 0x1602;
+	public static inline var SEC_OFFSET_LATENCY_SOFT:Int = 0x1201;
+	public static inline var SEC_OFFSET_CLOCK_SOFT:Int = 0x1203;
 	public static inline var SOURCE_TYPE:Int = 0x1027;
 	public static inline var STATIC:Int = 0x1028;
 	public static inline var STREAMING:Int = 0x1029;
@@ -1158,6 +1163,24 @@ class AL
 		#end
 	}
 
+	public static function getSourcedvSoft(source:ALSource, param:Int, count:Int = 1):Array<Float>
+	{
+		#if (lime_cffi && lime_openal && !macro)
+		var result = NativeCFFI.lime_al_get_sourcedv_soft(source, param, count);
+		#if hl
+		if (result == null) return [];
+		var _result:Array<Float> = [];
+		for (i in 0...result.length)
+			_result[i] = result[i];
+		return _result;
+		#else
+		return result;
+		#end
+		#else
+		return null;
+		#end
+	}
+
 	public static function sourcei(source:ALSource, param:Int, value:Dynamic):Void
 	{
 		#if (lime_cffi && lime_openal && !macro)
@@ -1209,6 +1232,27 @@ class AL
 		var sources = _sources;
 		#end
 		NativeCFFI.lime_al_source_playv(sources.length, sources);
+		#end
+	}
+
+	public static function sourcePlayAtTimeSoft(source:ALSource, startTime:Float):Void
+	{
+		#if (lime_cffi && lime_openal && !macro)
+		final delay = startTime/1000;
+		NativeCFFI.lime_al_source_play_at_time_soft(source, delay);
+		#end
+	}
+
+	public static function sourcePlayvAtTimeSoft(sources:Array<ALSource>, startTime:Float):Void
+	{
+		#if (lime_cffi && lime_openal && !macro)
+		#if hl
+		var _sources = new hl.NativeArray<ALSource>(sources.length);
+		for (i in 0...sources.length)
+			_sources[i] = sources[i];
+		var sources = _sources;
+		#end
+		NativeCFFI.lime_al_source_play_at_timev_soft(sources.length, sources, startTime);
 		#end
 	}
 

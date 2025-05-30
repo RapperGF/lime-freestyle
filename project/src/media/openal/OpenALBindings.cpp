@@ -2130,6 +2130,26 @@ namespace lime {
 		#endif
 	}
 
+	value lime_alc_get_integer64v_soft(value device, int param) {
+		#ifdef LIME_OPENALSOFT
+		ALCdevice* alcDevice = (ALCdevice*)val_data(device);
+		ALCint64SOFT value64 = 0;
+		alcGetInteger64vSOFT(alcDevice, param, 1, &value64);
+
+		// Convert to double (float64) for safe return to Haxe
+		double result = static_cast<double>(value64);
+
+		return alloc_float(result);
+		#endif
+	}
+
+	/*HL_PRIM int64_t HL_NAME(alc_get_integer64v_soft)(vbyte* device, int param) {
+		ALCdevice* alcDevice = (ALCdevice*)device;
+		ALCint64SOFT value64 = 0;
+		alcGetInteger64vSOFT(alcDevice, (ALCenum)param, 1, &value64);
+		return value64;
+	}*/
+
 
 	value lime_al_get_sourcei (value source, int param) {
 
@@ -2604,14 +2624,12 @@ namespace lime {
 
 	}
 
-
 	void lime_al_source_play (value source) {
 
 		ALuint id = (ALuint)(uintptr_t)val_data (source);
 		alSourcePlay (id);
 
 	}
-
 
 	HL_PRIM void HL_NAME(hl_al_source_play) (HL_CFFIPointer* source) {
 
@@ -2620,22 +2638,52 @@ namespace lime {
 
 	}
 
-	void lime_al_source_play_at_time_soft(int source, double startTime) {
-		if (!alSourcePlayAtTimeSOFT_ptr)
-			alSourcePlayAtTimeSOFT_ptr = (LPALSOURCEPLAYATTIMESOFT)alGetProcAddress("alSourcePlayAtTimeSOFT");
+	void lime_al_source_play_at_time_soft(value source, double startTime) {
+		
+		ALuint id = (ALuint)(uintptr_t)val_data (source); 
+		ALCcontext* context = alcGetCurrentContext();
+		if (!context) {
+			printf("No current OpenAL context\n");
+			return;
+		}
 
-		if (alSourcePlayAtTimeSOFT_ptr)
-			alSourcePlayAtTimeSOFT_ptr((ALuint)source, (ALint64SOFT)(int64_t)startTime);
+		ALCdevice* device = alcGetContextsDevice(context);
+		if (!device) {
+			printf("No current OpenAL device\n");
+			return;
+		}
+
+		ALCint64SOFT clock = 0;
+		alcGetInteger64vSOFT(alcGetContextsDevice(alcGetCurrentContext()), ALC_DEVICE_CLOCK_SOFT, 1, &clock);
+
+		ALint64SOFT delayInNS = static_cast<ALint64SOFT>(startTime * 1e9);
+		ALint64SOFT playTime = clock + delayInNS;
+		alSourcePlayAtTimeSOFT(id, playTime);
 	}
 
-	HL_PRIM void HL_NAME(hl_al_source_play_at_time_soft)(int source, double startTime) {
-		if (!alSourcePlayAtTimeSOFT_ptr)
-			alSourcePlayAtTimeSOFT_ptr = (LPALSOURCEPLAYATTIMESOFT)alGetProcAddress("alSourcePlayAtTimeSOFT");
 
-		if (alSourcePlayAtTimeSOFT_ptr)
-			alSourcePlayAtTimeSOFT_ptr((ALuint)source, (ALint64SOFT)(int64_t)startTime);
+	HL_PRIM void HL_NAME(hl_al_source_play_at_time_soft)(HL_CFFIPointer* source, double startTime) {
+
+		ALuint id = *(ALuint*)(source->ptr);
+		ALCcontext* context = alcGetCurrentContext();
+		if (!context) {
+			printf("No current OpenAL context\n");
+			return;
+		}
+
+		ALCdevice* device = alcGetContextsDevice(context);
+		if (!device) {
+			printf("No current OpenAL device\n");
+			return;
+		}
+
+		ALCint64SOFT clock = 0;
+		alcGetInteger64vSOFT(device, ALC_DEVICE_CLOCK_SOFT, 1, &clock);
+		
+		ALint64SOFT delayInNS = (ALint64SOFT)(startTime * 1e9);
+		ALint64SOFT playTime = clock + delayInNS;
+		alSourcePlayAtTimeSOFT(id, playTime);
 	}
-
 
 	void lime_al_source_playv (int n, value sources) {
 
@@ -3660,6 +3708,7 @@ namespace lime {
 	DEFINE_PRIME2 (lime_al_get_sourcef);
 	DEFINE_PRIME3 (lime_al_get_sourcefv);
 	DEFINE_PRIME3 (lime_al_get_sourcedv_soft);
+	DEFINE_PRIME2 (lime_alc_get_integer64v_soft); 
 	DEFINE_PRIME2 (lime_al_get_sourcei);
 	DEFINE_PRIME3 (lime_al_get_sourceiv);
 	DEFINE_PRIME1 (lime_al_get_string);
@@ -3788,6 +3837,7 @@ namespace lime {
 	DEFINE_HL_PRIM (_ARR, hl_al_get_sourcefv, _TCFFIPOINTER _I32 _I32);
 	DEFINE_HL_PRIM (_DYN, hl_al_get_sourcei, _TCFFIPOINTER _I32);
 	DEFINE_HL_PRIM (_ARR, hl_al_get_sourcedv_soft, _TCFFIPOINTER _I32 _I32);
+	DEFINE_HL_PRIM (_F64, alc_get_integer64v_soft, _TCFFIPOINTER _I32);
 	DEFINE_HL_PRIM (_ARR, hl_al_get_sourceiv, _TCFFIPOINTER _I32 _I32);
 	DEFINE_HL_PRIM (_BYTES, hl_al_get_string, _I32);
 	DEFINE_HL_PRIM (_BOOL, hl_al_is_aux, _TCFFIPOINTER);
