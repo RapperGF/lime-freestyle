@@ -1,5 +1,5 @@
 name: CI
-on: [push, pull_request]
+on: [push, pull_request, workflow_dispatch]
 
 env:
   HAXE_VERSION: 4.2.5
@@ -7,7 +7,7 @@ env:
 jobs:
 
   linux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
 
       - uses: actions/checkout@v4
@@ -29,8 +29,8 @@ jobs:
 
       - name: Install Haxe dependencies
         run: |
-          curl --output ../hxcpp-4.3.89.zip --location https://github.com/HaxeFoundation/hxcpp/releases/download/v4.3.89/hxcpp-4.3.89.zip
-          haxelib install ../hxcpp-4.3.89.zip --quiet
+          curl --output ../hxcpp-4.3.45.zip --location https://github.com/HaxeFoundation/hxcpp/releases/download/v4.3.45/hxcpp-4.3.45.zip
+          haxelib install ../hxcpp-4.3.45.zip --quiet
           haxelib install format --quiet
           haxelib install hxp --quiet
 
@@ -202,8 +202,8 @@ jobs:
 
       - name: Install Haxe dependencies
         run: |
-          curl --output ../hxcpp-4.3.89.zip --location https://github.com/HaxeFoundation/hxcpp/releases/download/v4.3.89/hxcpp-4.3.89.zip
-          haxelib install ../hxcpp-4.3.89.zip --quiet
+          curl --output ../hxcpp-4.3.45.zip --location https://github.com/HaxeFoundation/hxcpp/releases/download/v4.3.45/hxcpp-4.3.45.zip
+          haxelib install ../hxcpp-4.3.45.zip --quiet
           haxelib install format --quiet
           haxelib install hxp --quiet
 
