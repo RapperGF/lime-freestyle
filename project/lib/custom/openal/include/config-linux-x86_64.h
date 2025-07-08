@@ -49,9 +49,6 @@
 /* Define the installation data directory */
 /* #define ALSOFT_INSTALL_DATADIR */
 
-/* Define to 1 if we have DBus/RTKit, else 0 */
-#define HAVE_RTKIT 0
-
 /* Define to 1 if building for winuwp, else 0 */
 #define ALSOFT_UWP 0
 
