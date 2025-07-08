@@ -1,3 +1,7 @@
+#ifndef RESTRICT
+#define RESTRICT __restrict__
+#endif
+
 #define AL_API  __attribute__((visibility("default")))
 #define ALC_API __attribute__((visibility("default")))
 
