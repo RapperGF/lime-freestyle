@@ -51,6 +51,3 @@
 
 /* Define to 1 if building for winuwp, else 0 */
 #define ALSOFT_UWP 0
-
-/* Define to 1 if building with legacy EAX API support, else 0 */
-#define ALSOFT_EAX 0
