@@ -61,4 +61,7 @@
 [submodule "project/lib/hashlink"]
 	path = project/lib/hashlink
 	url = https://github.com/HaxeFoundation/hashlink
+[submodule "project/lib/sdl_sound"]
+	path = project/lib/sdl_sound
+	url = https://github.com/icculus/SDL_sound.git
   
