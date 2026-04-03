@@ -31,12 +31,41 @@ import flash.net.URLRequest;
 @:fileXml('tags="haxe,release"')
 @:noDebug
 #end
+
+/**
+	The `AudioBuffer` class represents a buffer of audio data that can be played back using an `AudioSource`.
+	It supports a variety of audio formats and platforms, providing a consistent API for loading and managing audio data.
+
+	Depending on the platform, the audio backend may differ, but the class provides a unified interface for accessing
+	audio data, whether it's stored in memory, loaded from a file, or streamed.
+
+	@see lime.media.AudioSource
+**/
 class AudioBuffer
 {
+	/**
+		The number of bits per sample in the audio data.
+	**/
 	public var bitsPerSample:Int;
+
+	/**
+		The number of audio channels (e.g., 1 for mono, 2 for stereo).
+	**/
 	public var channels:Int;
+
+	/**
+		The raw audio data stored as a `UInt8Array`.
+	**/
 	public var data:UInt8Array;
+
+	/**
+		The sample rate of the audio data, in Hz.
+	**/
 	public var sampleRate:Int;
+
+	/**
+		The source of the audio data. This can be an `Audio`, `Sound`, `Howl`, or other platform-specific object.
+	**/
 	public var src(get, set):Dynamic;
 
 	@:noCompletion private var __srcAudio:#if (js && html5) Audio #else Dynamic #end;
@@ -44,6 +73,10 @@ class AudioBuffer
 	@:noCompletion private var __srcCustom:Dynamic;
 	@:noCompletion private var __srcHowl:#if lime_howlerjs Howl #else Dynamic #end;
 	@:noCompletion private var __srcSound:#if flash Sound #else Dynamic #end;
+	@:noCompletion private var __srcSDLSoundBytes:#if lime_sdl_sound Bytes #else Dynamic #end;
+	@:noCompletion private var __srcSDLSoundCanSeek:Bool;
+	@:noCompletion private var __srcSDLSoundDuration:Int;
+	@:noCompletion private var __srcSDLSoundPath:String;
 	@:noCompletion private var __srcVorbisFile:#if lime_vorbis VorbisFile #else Dynamic #end;
 
 	#if commonjs
@@ -57,8 +90,14 @@ class AudioBuffer
 	}
 	#end
 
+	/**
+		Creates a new, empty `AudioBuffer` instance.
+	**/
 	public function new() {}
 
+	/**
+		Disposes of the resources used by this `AudioBuffer`, such as unloading any associated audio data.
+	**/
 	public function dispose():Void
 	{
 		#if (js && html5 && lime_howlerjs)
@@ -66,6 +105,12 @@ class AudioBuffer
 		#end
 	}
 
+	/**
+		Creates an `AudioBuffer` from a Base64-encoded string.
+
+		@param base64String The Base64-encoded audio data.
+		@return An `AudioBuffer` instance with the decoded audio data.
+	**/
 	public static function fromBase64(base64String:String):AudioBuffer
 	{
 		if (base64String == null) return null;
@@ -112,6 +157,12 @@ class AudioBuffer
 		return null;
 	}
 
+	/**
+		Creates an `AudioBuffer` from a `Bytes` object.
+
+		@param bytes The `Bytes` object containing the audio data.
+		@return An `AudioBuffer` instance with the decoded audio data.
+	**/
 	public static function fromBytes(bytes:Bytes):AudioBuffer
 	{
 		if (bytes == null) return null;
@@ -145,6 +196,43 @@ class AudioBuffer
 		return null;
 	}
 
+	/**
+		Creates a streamed `AudioBuffer` from a `Bytes` object.
+
+		@param bytes The `Bytes` object containing the compressed audio data.
+		@return An `AudioBuffer` configured for streamed playback when supported.
+	**/
+	public static function fromBytesStream(bytes:Bytes):AudioBuffer
+	{
+		if (bytes == null) return null;
+
+		#if (lime_cffi && !macro && lime_sdl_sound)
+		var streamInfo = NativeCFFI.lime_sdl_sound_get_info_from_bytes(bytes);
+
+		if (streamInfo != null)
+		{
+			return __fromSDLSoundInfo(streamInfo, bytes, null);
+		}
+		#end
+
+		#if lime_vorbis
+		var vorbisFile = VorbisFile.fromBytes(bytes);
+
+		if (vorbisFile != null)
+		{
+			return fromVorbisFile(vorbisFile);
+		}
+		#end
+
+		return fromBytes(bytes);
+	}
+
+	/**
+		Creates an `AudioBuffer` from a file.
+
+		@param path The file path to the audio data.
+		@return An `AudioBuffer` instance with the audio data loaded from the file.
+	**/
 	public static function fromFile(path:String):AudioBuffer
 	{
 		if (path == null) return null;
@@ -196,6 +284,43 @@ class AudioBuffer
 		#end
 	}
 
+	/**
+		Creates a streamed `AudioBuffer` from a file.
+
+		@param path The file path to the audio data.
+		@return An `AudioBuffer` configured for streamed playback when supported.
+	**/
+	public static function fromFileStream(path:String):AudioBuffer
+	{
+		if (path == null) return null;
+
+		#if (lime_cffi && !macro && lime_sdl_sound)
+		var streamInfo = NativeCFFI.lime_sdl_sound_get_info_from_file(path);
+
+		if (streamInfo != null)
+		{
+			return __fromSDLSoundInfo(streamInfo, null, path);
+		}
+		#end
+
+		#if lime_vorbis
+		var vorbisFile = VorbisFile.fromFile(path);
+
+		if (vorbisFile != null)
+		{
+			return fromVorbisFile(vorbisFile);
+		}
+		#end
+
+		return fromFile(path);
+	}
+
+	/**
+		Creates an `AudioBuffer` from an array of file paths.
+
+		@param paths An array of file paths to search for audio data.
+		@return An `AudioBuffer` instance with the audio data loaded from the first valid file found.
+	**/
 	public static function fromFiles(paths:Array<String>):AudioBuffer
 	{
 		#if (js && html5 && lime_howlerjs)
@@ -221,7 +346,33 @@ class AudioBuffer
 		#end
 	}
 
+	/**
+		Creates a streamed `AudioBuffer` from an array of file paths.
+
+		@param paths An array of file paths to search for audio data.
+		@return An `AudioBuffer` configured for streamed playback when supported.
+	**/
+	public static function fromFilesStream(paths:Array<String>):AudioBuffer
+	{
+		var buffer = null;
+
+		for (path in paths)
+		{
+			buffer = AudioBuffer.fromFileStream(path);
+			if (buffer != null) break;
+		}
+
+		return buffer;
+	}
+
+	/**
+		Creates an `AudioBuffer` from a `VorbisFile`.
+
+		@param vorbisFile The `VorbisFile` object containing the audio data.
+		@return An `AudioBuffer` instance with the decoded audio data.
+	**/
 	#if lime_vorbis
+
 	public static function fromVorbisFile(vorbisFile:VorbisFile):AudioBuffer
 	{
 		if (vorbisFile == null) return null;
@@ -243,6 +394,12 @@ class AudioBuffer
 	}
 	#end
 
+	/**
+		Asynchronously loads an `AudioBuffer` from a file.
+
+		@param path The file path to the audio data.
+		@return A `Future` that resolves to the loaded `AudioBuffer`.
+	**/
 	public static function loadFromFile(path:String):Future<AudioBuffer>
 	{
 		#if (flash || (js && html5))
@@ -307,11 +464,69 @@ class AudioBuffer
 		#end
 	}
 
+	/**
+		Asynchronously loads a streamed `AudioBuffer` from a file or URL.
+
+		@param path The file path or URL to the audio data.
+		@return A `Future` that resolves to the loaded `AudioBuffer`.
+	**/
+	public static function loadFromFileStream(path:String):Future<AudioBuffer>
+	{
+		#if (flash || (js && html5))
+		return loadFromFile(path);
+		#else
+		if (path == null)
+		{
+			return cast Future.withError("");
+		}
+
+		if (__isRemotePath(path))
+		{
+			var promise = new Promise<AudioBuffer>();
+			var request = new HTTPRequest<Bytes>();
+
+			request.load(path)
+				.onProgress(promise.progress)
+				.onComplete(function(bytes)
+				{
+					var buffer = fromBytesStream(bytes);
+
+					if (buffer != null)
+					{
+						promise.complete(buffer);
+					}
+					else
+					{
+						promise.error("");
+					}
+				})
+				.onError(promise.error);
+
+			return promise.future;
+		}
+
+		var audioBuffer = fromFileStream(path);
+
+		if (audioBuffer != null)
+		{
+			return Future.withValue(audioBuffer);
+		}
+
+		return cast Future.withError("");
+		#end
+	}
+
+	/**
+		Asynchronously loads an `AudioBuffer` from multiple files.
+
+		@param paths An array of file paths to search for audio data.
+		@return A `Future` that resolves to the loaded `AudioBuffer`.
+	**/
 	public static function loadFromFiles(paths:Array<String>):Future<AudioBuffer>
 	{
+		#if (js && html5 && lime_howlerjs)
 		var promise = new Promise<AudioBuffer>();
 
-		#if (js && html5 && lime_howlerjs)
 		var audioBuffer = AudioBuffer.fromFiles(paths);
 
 		if (audioBuffer != null)
@@ -332,16 +547,43 @@ class AudioBuffer
 		{
 			promise.error(null);
 		}
-		#else
-		promise.completeWith(new Future<AudioBuffer>(function() return fromFiles(paths), true));
-		#end
 
 		return promise.future;
+		#else
+		return new Future(fromFiles.bind(paths), true);
+		#end
+	}
+
+	/**
+		Asynchronously loads a streamed `AudioBuffer` from multiple files or URLs.
+
+		@param paths An array of file paths or URLs to search for audio data.
+		@return A `Future` that resolves to the loaded `AudioBuffer`.
+	**/
+	public static function loadFromFilesStream(paths:Array<String>):Future<AudioBuffer>
+	{
+		#if (js && html5 && lime_howlerjs)
+		return loadFromFiles(paths);
+		#else
+		var promise = new Promise<AudioBuffer>();
+		__loadFromFilesStream(paths, promise, 0);
+		return promise.future;
+		#end
 	}
 
 	private static function __getCodec(bytes:Bytes):String
 	{
-		var signature = bytes.getString(0, 4);
+		var signature:String = null;
+		try
+		{
+			signature = bytes.getString(0, 4);
+		}
+		catch (e:Dynamic)
+		{
+			// if the bytes don't represent a valid UTF-8 string, getString()
+			// may throw an exception. in that case, we expect to end up in
+			// the default switch case below where it tries to detect MP3.
+		}
 
 		switch (signature)
 		{
@@ -361,6 +603,50 @@ class AudioBuffer
 
 		Log.error("Unsupported sound format");
 		return null;
+	}
+
+	@:noCompletion private static function __fromSDLSoundInfo(streamInfo:Dynamic, bytes:Bytes, path:String):AudioBuffer
+	{
+		if (streamInfo == null) return null;
+
+		var audioBuffer = new AudioBuffer();
+		audioBuffer.bitsPerSample = streamInfo.bitsPerSample;
+		audioBuffer.channels = streamInfo.channels;
+		audioBuffer.sampleRate = streamInfo.sampleRate;
+		audioBuffer.__srcSDLSoundBytes = bytes;
+		audioBuffer.__srcSDLSoundCanSeek = streamInfo.canSeek;
+		audioBuffer.__srcSDLSoundDuration = streamInfo.duration;
+		audioBuffer.__srcSDLSoundPath = path;
+		return audioBuffer;
+	}
+
+	@:noCompletion private static function __isRemotePath(path:String):Bool
+	{
+		return path != null && (path.indexOf("http://") == 0 || path.indexOf("https://") == 0);
+	}
+
+	@:noCompletion private static function __loadFromFilesStream(paths:Array<String>, promise:Promise<AudioBuffer>, index:Int):Void
+	{
+		if (paths == null || index >= paths.length)
+		{
+			promise.error("");
+			return;
+		}
+
+		loadFromFileStream(paths[index]).onProgress(promise.progress).onComplete(function(buffer)
+		{
+			if (buffer != null)
+			{
+				promise.complete(buffer);
+			}
+			else
+			{
+				__loadFromFilesStream(paths, promise, index + 1);
+			}
+		}).onError(function(_)
+		{
+			__loadFromFilesStream(paths, promise, index + 1);
+		});
 	}
 
 	// Get & Set Methods
